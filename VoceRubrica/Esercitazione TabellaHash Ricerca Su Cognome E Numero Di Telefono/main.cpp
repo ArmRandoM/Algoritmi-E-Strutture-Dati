@@ -65,7 +65,7 @@ int main()
 		TabellaHash<VoceRubrica> Rubrica2( hNumero, 100);
 		VoceRubrica vr;
 
-    for(int i = 1; i<= 4; i++)
+    for(int i = 1; i<= 10; i++)
       {
         cin >> vr; //operatore >> ridefinito in VoceRubrica
         Rubrica1.Ins(vr); //inserimento nella tabella hash Rubrica con hashing per cognome
@@ -81,7 +81,7 @@ int main()
 		cout << "===============================" << endl;
     ContattoDaCercare.setCognome( CognomeDaCercare );
 		ContattoDaCercare.setNumeroTelefonico( NumeroDaCercare );
-		
+
     if (Rubrica1.Cerca(ContattoDaCercare)) //ricerca e assegnamento del contatto trovato nella Rubrica
       	{
 					cout << endl << endl;
