@@ -1,25 +1,35 @@
-#include <list>
 #include <iostream>
-using namespace std;
 
 int main()
 {
 
   int numero;
-  list<int> ElencoNumeri;
+  int ElencoNumeri[1000] = {0};
+  int max = 0;
 
-  cin >> numero;
+  std::cin >> numero;
 
   while( numero != -1 )
     {
-      ElencoNumeri.push_back(numero);
-      cin >> numero;
+      ElencoNumeri[numero] += 1;
+      std::cin >>numero;
+      if( numero > max )
+        max = numero+1;
     }
 
-  ElencoNumeri.sort();
-
-  for( list<int>::iterator it = ElencoNumeri.begin(); it != ElencoNumeri.end(); it++ )
-    cout << *it << endl;
+  for( int i = 0; i < max; i++ )
+    {
+      if( ElencoNumeri[i] != 0 )
+        {
+          if( ElencoNumeri[i] == 1 )
+            std::cout << i << std::endl;
+          else
+            {
+              for( int j = 0; j < ElencoNumeri[i]; j++)
+                std::cout << i << std::endl;
+            }
+        }
+    }
 
   return 0;
 
