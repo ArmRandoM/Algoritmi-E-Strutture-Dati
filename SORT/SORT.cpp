@@ -20,16 +20,10 @@ int main()
     {
       if( ElencoNumeri[i] != 0 )
         {
-          if( ElencoNumeri[i] == 1 )
+          for( int j = 0; j < ElencoNumeri[i]; ++j)
             printf("%d\n", i );
-          else
-            {
-              for( int j = 0; j < ElencoNumeri[i]; ++j)
-                printf("%d\n", i );
-            }
         }
     }
 
   return 0;
-
 }
