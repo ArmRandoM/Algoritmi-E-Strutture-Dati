@@ -7,8 +7,6 @@
 #ifndef ALBEROB_H
 #define ALBEROB_H
 
-#include <assert.h>
-
 enum Direzione { SIN=0, DES=1 };
 
 template <class T>
@@ -16,7 +14,10 @@ struct SNodo{
 	T vinfo; // parte informativa
 	SNodo *ppadre, *pfiglio[2]; // puntatori al padre e ai due figli
 	SNodo( const T& inf ): vinfo(inf)
-	{	ppadre = pfiglio[SIN] = pfiglio[DES] = 0;
+	{
+		ppadre = 0;
+		pfiglio[SIN] = 0;
+		pfiglio[DES] = 0;
 	}
 	~SNodo( ) {delete pfiglio[SIN]; delete pfiglio[DES];}
 };
@@ -37,9 +38,8 @@ public:
 
 	//	inserisce l'albero AC come figlio d = SIN/DES
     void insFiglio ( Direzione d, AlberoB& AC ) {
-        assert( !nullo() );
-        assert( figlio(d).nullo() );
-        if ( !AC.nullo() ) {
+        if( AC.pradice != 0)
+				 {
             pradice->pfiglio[d]=AC.pradice;
             AC.pradice->ppadre=pradice;
         }
@@ -47,7 +47,6 @@ public:
 
 	// 	estrae il figlio d = SIN/DES
     AlberoB<T> estraiFiglio ( Direzione d ) {
-        assert( !nullo() );
         AlberoB<T> A = figlio(d);
         A.pradice->ppadre=0;
         pradice->pfiglio[d] = 0;
@@ -56,7 +55,6 @@ public:
 
     // modifica il contenuto informativo della radice
     void modRadice ( const T& a ) {
-        assert( !nullo() );
         pradice->vinfo = a;
     };
 
@@ -67,7 +65,9 @@ public:
     void annulla() { pradice = 0; };
 
     //	FUNZIONI COSTANTI
-	bool nullo() const { return pradice == 0; };
+	bool nullo() const {	if( pradice == 0)
+		 											return true;
+												return false;};
 
 	// restituisce una copia dell'albero
     AlberoB<T> copia () const {
@@ -82,18 +82,19 @@ public:
 
 	//	mostra l'info della radice
     const T& radice () const {
-        assert( !nullo() );
         return pradice->vinfo;
     };
 
 	// restituisce true se la radice è nodo foglia
-    bool foglia () const {
-        return !nullo()&&figlio(SIN).nullo()&& figlio(DES).nullo();
-    };
+    bool foglia () const
+			{
+				if((!this -> nullo()) && this -> figlio(SIN).nullo() && this -> figlio(DES).nullo())
+        	return true;
+				return false;
+    	};
 
 	// restituisce il figlio d = SIN/DES
     AlberoB<T> figlio ( Direzione d ) const {
-        assert( !nullo() );
         AlberoB<T> AC;
         AC.pradice = pradice->pfiglio[d];
         return AC;
@@ -101,7 +102,6 @@ public:
 
 	//	restituisce il padre eventualmente nullo
     AlberoB<T> padre () const {
-        assert( !nullo() );
         AlberoB<T> AC;
         AC.pradice = pradice->ppadre;
         return AC;
